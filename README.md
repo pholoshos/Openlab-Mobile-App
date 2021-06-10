@@ -1,22 +1,16 @@
-# Openlab-Mobile-App
-the mobile app for open lab
+# openlab_mobile
 
-We are going to use flutter
-you will need to download and install flutter on your computer to run this code.
-System requirements
+A new Flutter application.
 
-To install and run Flutter, your development environment must meet these minimum requirements:
+## Getting Started
 
-    Operating Systems: Windows 7 SP1 or later (64-bit), x86-64 based
-    Disk Space: 1.64 GB (does not include disk space for IDE/tools).
-    Tools: Flutter depends on these tools being available in your environment.
-        Windows PowerShell 5.0 or newer (this is pre-installed with Windows 10)
+This project is a starting point for a Flutter application.
 
-        Git for Windows 2.x, with the Use Git from the Windows Command Prompt option.
+A few resources to get you started if this is your first Flutter project:
 
-        If Git for Windows is already installed, make sure you can run git commands from the command prompt or PowerShell.
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-#Get the Flutter SDK
-
-    Download the following installation bundle to get the latest stable release of the Flutter SDK:
-    https://flutter.dev/docs/get-started/install/windows
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
