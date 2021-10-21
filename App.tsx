@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { ImageBackground, Pressable, StyleSheet, Text, TextInput, TouchableWithoutFeedbackBase, View } from 'react-native';
 import  React,{useState,useEffect,Component} from 'react';
 import appTheme from './appTheme';
+import axios from 'axios';
 import appStyle from './style';
 
 
@@ -82,10 +83,33 @@ export default function App() {
   
   const [page,setPage] =  useState("home");
   const [isAvailable,setIsAvailable] = useState('available');
+  
   const [workId,setWorkId] = useState('');
   const [password,setPassword] = useState('');
   const [loginWarning, setLoginWarning] = useState('enter the details below');
-  
+
+  const [tasks,setTasks] = useState([{_id:'a'},{_id:'b'}]);
+  const [people,setPeople] = useState([{_id:'a'},{_id:'b'}]);
+  const [notifications,setNotifications] = useState([{_id:'a'},{_id:'b'}]);
+
+
+  const  getTasks  = async ()=>{
+    var url = "https://openlabprojects.herokuapp.com/task/all"; 
+    await axios.post(url,{
+
+      _id : '',
+      authkey : '',
+      status : 'incomplete'
+
+    }).then((response)=>{
+      if(response.data){
+        setTasks(response.data);
+      }else{
+
+      }
+    })
+  }
+
   const StatusButton = ()=>{
     if(isAvailable == "available"){
       return(
@@ -159,6 +183,15 @@ export default function App() {
 
     const login = ()=>{
       if(workId.length >= 8|| password.length >= 8 ){
+        axios.post('',{
+
+        }).then((response)=>{
+          if(response.data){
+
+          }else{
+
+          }
+        })
 
       }else{
         setLoginWarning('please check you password or work id');
