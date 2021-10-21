@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, Pressable, StyleSheet, Text, TextInput, TouchableWithoutFeedbackBase, View } from 'react-native';
+import { FlatList, ImageBackground, Pressable, RefreshControl, StyleSheet, Text, TextInput, TouchableWithoutFeedbackBase, View } from 'react-native';
 import  React,{useState,useEffect,Component} from 'react';
 import appTheme from './appTheme';
 import axios from 'axios';
@@ -83,7 +83,8 @@ export default function App() {
   
   const [page,setPage] =  useState("home");
   const [isAvailable,setIsAvailable] = useState('available');
-  
+  const [refreshing,setRefresh] = useState(false);
+
   const [workId,setWorkId] = useState('');
   const [password,setPassword] = useState('');
   const [loginWarning, setLoginWarning] = useState('enter the details below');
@@ -91,10 +92,13 @@ export default function App() {
   const [tasks,setTasks] = useState([{_id:'a'},{_id:'b'}]);
   const [people,setPeople] = useState([{_id:'a'},{_id:'b'}]);
   const [notifications,setNotifications] = useState([{_id:'a'},{_id:'b'}]);
+  const [account,setAccount] = useState([{_id:'a'},{_id:'b'}]);
+
 
 
   const  getTasks  = async ()=>{
     var url = "https://openlabprojects.herokuapp.com/task/all"; 
+    setRefresh(true);
     await axios.post(url,{
 
       _id : '',
@@ -104,11 +108,66 @@ export default function App() {
     }).then((response)=>{
       if(response.data){
         setTasks(response.data);
+        setRefresh(false);
+      }else{
+        setRefresh(false);
+      }
+    })
+  }
+
+  const  getPeople  = async ()=>{
+    var url = "https://openlabprojects.herokuapp.com/account/department"; 
+    await axios.post(url,{
+
+      _id : '',
+      authkey : '',
+      department : ''
+
+    }).then((response)=>{
+      if(response.data){
+        setPeople(response.data);
       }else{
 
       }
     })
   }
+
+  const  completeTasks  = async ()=>{
+    var url = "https://openlabprojects.herokuapp.com/task/complete"; 
+    await axios.post(url,{
+
+      _id : '',
+      authkey : '',
+      taskId : ''
+
+    }).then((response)=>{
+      if(response.data){
+        setTasks(response.data);
+      }else{
+
+      }
+    })
+  }
+
+
+  const  setAvailability  = async (a)=>{
+    var url = "https://openlabprojects.herokuapp.com/account/availability"; 
+    await axios.post(url,{
+
+      _id : '',
+      authkey : '',
+      status : a,
+      
+
+    }).then((response)=>{
+      if(response.data){
+        setAccount(response.data);
+      }else{
+
+      }
+    })
+  }
+  
 
   const StatusButton = ()=>{
     if(isAvailable == "available"){
@@ -165,7 +224,18 @@ export default function App() {
         <View style={appStyle.divider}></View>
 
         <View style={{height:'70%',width:'90%'}}>
-          <Card date={'20/2/102'} descr={'We provide separate builds for browser, module bundlers (e.g. Webpack) and in case of Services library - Node.js. In the next sections we describe how to include and use libraries depending the on environment.'} creator={"Pholosho"}  title={"clean office please"}></Card>
+            <FlatList showsVerticalScrollIndicator={false} style={{alignSelf:'center',width:'100%'}}
+              data={tasks}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={()=>{setRefresh(true);getTasks()}}/>
+              }
+              
+              renderItem={ ({item})=>(
+                <Card date={'20/2/102'} descr={'We provide separate builds for browser, module bundlers (e.g. Webpack) and in case of Services library - Node.js. In the next sections we describe how to include and use libraries depending the on environment.'} creator={"Pholosho"}  title={"clean office please"}></Card>
+              )}
+              keyExtractor={(item)=>item._id}
+            /> 
+          
         
 
         </View>
