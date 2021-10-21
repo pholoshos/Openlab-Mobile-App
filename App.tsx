@@ -26,6 +26,7 @@ const Card = (props)=>{
 };
 
 const UserCard = (props)=>{
+
   const AvailableView = ()=>{
     if(props.availability == "available"){
       return(
@@ -78,9 +79,13 @@ const NotificationCard = (props)=>{
 }
 
 export default function App() {
+  
   const [page,setPage] =  useState("home");
   const [isAvailable,setIsAvailable] = useState('available');
-
+  const [workId,setWorkId] = useState('');
+  const [password,setPassword] = useState('');
+  const [loginWarning, setLoginWarning] = useState('enter the details below');
+  
   const StatusButton = ()=>{
     if(isAvailable == "available"){
       return(
@@ -104,7 +109,7 @@ export default function App() {
     }
 
   }
-
+  
   //for home screen
   if(page == "home"){
     return (
@@ -142,7 +147,7 @@ export default function App() {
         </View>
 
        
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </View>
     );
 
@@ -151,21 +156,30 @@ export default function App() {
   
   //for login screen
   if(page  == "login"){
+
+    const login = ()=>{
+      if(workId.length >= 8|| password.length >= 8 ){
+
+      }else{
+        setLoginWarning('please check you password or work id');
+      }
+    }
+
     return (
       <View style={styles.container}>
         <ImageBackground style={{width:'100%',height:'100%',position:'absolute'}} source={require('./assets/b.jpg')}></ImageBackground>
-        <Text style={appStyle.title}>login</Text>
-        <Text style={{color:'white'}}>enter your openlab details below</Text>
+        <Text style={appStyle.title}>Openlab</Text>
+        <Text style={{color:'white'}}>{loginWarning}</Text>
         
         <View>
-          <TextInput style={appStyle.input} placeholder="Enter your email address"></TextInput>
-          <TextInput style={appStyle.input} placeholder="Enter password"></TextInput>
-          <Pressable onPress={()=>{setPage('home')}} style={appStyle.button}>
+          <TextInput onChangeText={(text)=>setWorkId(text)} style={appStyle.input} placeholder="Enter your email address"></TextInput>
+          <TextInput onChangeText={(text)=>setPassword(text)} style={appStyle.input} placeholder="Enter password"></TextInput>
+          <Pressable onPress={()=>{login()}} style={appStyle.button}>
             <Text style={{color:'white'}}>Sign In</Text>
           </Pressable>
         </View>
        
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </View>
     );
   }
@@ -211,7 +225,7 @@ export default function App() {
           </Pressable>
         </View>
        
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </View>
     );
   }
@@ -266,7 +280,7 @@ export default function App() {
  
         </View>
        
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </View>
     );
   }
